@@ -33,7 +33,7 @@ debugger_log:lst/dbg_bochsout.log
 
 
 
-#clock sync shoule keep realtime to let timer work proper
+#clock sync should keep realtime to let timer work proper
 
 clock: sync=realtime, time0=local, rtc_sync=0
 
@@ -54,7 +54,7 @@ port_e9_hack: enabled=1
 
 
 
-#mouse and keyborad
+#mouse and keyboard
 
 mouse: enabled=0
 
