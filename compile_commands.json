@@ -1,0 +1,23 @@
+[
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-O",
+            "-fstrength-reduce",
+            "-fomit-frame-pointer",
+            "-finline-functions",
+            "-nostdinc",
+            "-fno-builtin",
+            "-m32",
+            "-I",
+            "./include",
+            "-o",
+            "main.o",
+            "kernel/main.c"
+        ],
+        "directory": "/home/syncrack/Desktop/os_exp",
+        "file": "kernel/main.c"
+    }
+]
