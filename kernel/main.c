@@ -1,3 +1,5 @@
+#include <stdarg.h>
+#include <stddef.h>
 #include <system.h>
 
 /* You will need to code these up yourself!  */
@@ -5,11 +7,49 @@ unsigned char *memcpy(unsigned char *dest, const unsigned char *src,
                       int count) {
   /* Add code here to copy 'count' bytes of data from 'src' to
    *  'dest', finally return 'dest' */
+  // 合法性校验
+  if (dest == NULL || src == NULL)
+    return dest;
+  unsigned char *ret = dest;
+
+  int blockNum = count / sizeof(dest);
+  int sliceNum = count % sizeof(dest);
+  // 1. 处理overlap的情况
+  // 2. 按块大小进行拷贝
+  if (src < dest) {
+    // backward copy
+    unsigned long *d = (unsigned long *)(dest + count - sizeof(dest));
+    unsigned long *s = (unsigned long *)(src + count - sizeof(dest));
+    while (blockNum--) {
+      *d-- = *s--;
+    }
+    dest = (unsigned char *)d;
+    src = (unsigned char *)s;
+    while (sliceNum--) {
+      *dest-- = *src--;
+    }
+  } else {
+    // forward copy
+    unsigned long *d = (unsigned long *)dest;
+    unsigned long *s = (unsigned long *)src;
+    while (blockNum--) {
+      *d++ = *s++;
+    }
+    dest = (unsigned char *)d;
+    src = (unsigned char *)s;
+    while (sliceNum--) {
+      *dest++ = *src++;
+    }
+  }
+  return ret;
 }
 
 unsigned char *memset(unsigned char *dest, unsigned char val, int count) {
   /* Add code here to set 'count' bytes in 'dest' to 'val'.
    *  Again, return 'dest' */
+  if (dest == NULL) {
+    return dest;
+  }
 }
 
 unsigned short *memsetw(unsigned short *dest, unsigned short val, int count) {
@@ -50,6 +90,9 @@ void outportb(unsigned short _port, unsigned char _data) {
  *  infinite loop. This will be like our 'idle' loop */
 int main() {
   /* You would add commands after here */
+#ifdef TEST
+  return test();
+#endif
 
   /* ...and leave this loop in. There is an endless loop in
    *  'start.asm' also, if you accidentally delete this next line */
